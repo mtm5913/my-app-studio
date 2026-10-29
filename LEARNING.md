@@ -29,10 +29,10 @@ Accuracy approval is not proof of understanding. Label simulated trials explicit
 
 ## APP-003
 
-- Prediction: Pending.
-- Check interpretation: Pending.
-- Browser observation: Pending.
-- Keep decision: Pending.
-- Review: Pending.
-- Help/gaps: Pending.
-- Evidence links / next step: Keep APP-002 before agreeing this lesson.
+- Prediction: Asked what should happen if a logged-in member requests the admin API directly, learner said “it should be denied.”
+- Check interpretation: After seeing a direct member request return the expected 403, learner said it would catch “something wrong with the authorization.” AI clarified the specific missing-server-check bug that hiding navigation alone would leave open.
+- Browser observation: As a member, learner reported “Your account has member access. This page is available to admins.” After AI used the trusted local command to promote the throwaway account and requested a refresh without logout, learner reported seeing “the admin page.”
+- Keep decision: Learner said “keep this permission flow because it only allows users with admin access.”
+- Review: Learner reviewed the new APP-003 excerpts and authorized commit, push and PR in this chat.
+- Help/gaps: AI proposed an admin overview limited to usernames and roles; learner approved. AI explained 403 and implemented server checks using prepared helpers, tests and layout review. AI performed the local test-account promotion. Automated checks also covered downgrade with an existing session; no learner observation of downgrade is claimed.
+- Evidence links / next step: [Issue #5](https://github.com/mtm5913/my-app-studio/issues/5); full APP-003 and normal checks passed (111 foundation, 18 cumulative contracts, 2 Chromium journeys). Accuracy review recorded; commit/PR and CI remain pending.

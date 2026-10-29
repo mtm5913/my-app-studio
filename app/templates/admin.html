@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Admin · Olive{% endblock %}
+{% block content %}
+<section class="member-intro" aria-labelledby="admin-title">
+  <p class="eyebrow">Account overview</p><h1 id="admin-title">Administration</h1>
+  <p>View account usernames and their current roles.</p>
+  <table>
+    <caption>Accounts and permissions</caption>
+    <thead><tr><th scope="col">Username</th><th scope="col">Role</th></tr></thead>
+    <tbody>{% for user in users %}<tr><th scope="row">{{ user.username }}</th><td>{{ user.role }}</td></tr>{% endfor %}</tbody>
+  </table>
+  <p><a href="/dashboard">Return to your member space →</a></p>
+</section>
+{% endblock %}
