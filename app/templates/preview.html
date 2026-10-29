@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Member preview · Olive{% endblock %}
+{% block content %}
+<section class="member-intro">
+  <p class="eyebrow">A peek at your own space</p><h1>Room for your everyday.</h1>
+  <p class="lede">A public preview, with sample content only. Your member space opens after login.</p>
+  <div class="panel preview-panel"><div><p class="eyebrow">Illustrative example</p><h2>A moment to pause.</h2><p>Meals and readings could sit side by side here. Tracking isn’t available yet, and this preview contains no personal records.</p></div><img src="/static/logo.svg" alt="" width="96" height="96"></div>
+  <a class="button" href="/dashboard">Open my member space <span aria-hidden="true">↗</span></a>
+  <p class="field-help">If you’re not logged in, we’ll help you log in and bring you back.</p>
+</section>
+{% endblock %}

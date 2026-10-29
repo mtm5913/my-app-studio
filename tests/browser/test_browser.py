@@ -122,7 +122,9 @@ def test_current_lesson_browser_journey(page, server):
         return
     username = "browser_" + uuid.uuid4().hex[:10]
     password = "a disposable browser passphrase"
-    page.goto(server.url + "/signup")
+    page.goto(server.url + "/preview")
+    page.get_by_role("link", name="Open my member space", exact=True).click()
+    page.get_by_role("link", name="Create an account", exact=True).click()
     page.get_by_label("Username", exact=True).fill(username)
     page.get_by_label("Password", exact=True).fill(password)
     page.get_by_role("button", name="Create account", exact=True).click()
