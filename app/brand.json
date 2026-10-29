@@ -1,16 +1,21 @@
 {
-  "name": "Your Project",
-  "audience": "Not chosen yet",
-  "archetype": "Not chosen yet",
-  "promise": "Not chosen yet",
-  "headline": "A small idea. A real application.",
-  "summary": "This working page is your starting point. Give it a purpose and a brand, then build accounts and permissions one feature at a time.",
-  "voice": ["Not chosen yet"],
-  "design_direction": "Not chosen yet",
+  "name": "Olive",
+  "audience": "Someone managing their own blood sugar, reviewing meals alongside readings",
+  "archetype": "Companion",
+  "promise": "A little support for noticing your everyday patterns.",
+  "headline": "A little more clarity. A little more care.",
+  "summary": "Meet Olive, your friend for making sense of meals and blood sugar readings. Make room for curiosity, one ordinary day at a time.",
+  "voice": [
+    "Warm",
+    "Friendly",
+    "Reassuring",
+    "Plainspoken"
+  ],
+  "design_direction": "Soft olive greens, warm cream, rounded shapes and generous space: a caring companion without unsupported privacy or medical claims.",
   "palette": {
-    "ink": "#182C34",
-    "paper": "#F6F5EF",
-    "accent": "#285A50",
+    "ink": "#243B30",
+    "paper": "#FAF9F3",
+    "accent": "#426348",
     "surface": "#FFFFFF"
   }
 }
