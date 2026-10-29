@@ -1,0 +1,32 @@
+<!doctype html>
+{% set brand = request.app.state.brand() %}
+{% set features = request.app.state.feature_flags() %}
+{% set current_user = request.app.state.current_user(request) if features.accounts else none %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ brand.summary }}">
+  <title>{% block title %}{{ brand.name }}{% endblock %}</title>
+  <link rel="icon" type="image/svg+xml" href="/static/logo.svg">
+  <link rel="stylesheet" href="/brand.css">
+  <link rel="stylesheet" href="/static/site.css">
+  {% if request.app.state.live_reload %}<script src="/static/live.js" defer></script>{% endif %}
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header wrap">
+    <a class="wordmark" href="/" aria-label="{{ brand.name }} home"><img src="/static/logo.svg" alt="" width="36" height="36">{{ brand.name }}</a>
+    <nav aria-label="Main navigation">
+      <a href="/#idea">The idea</a>
+      {% if features.accounts %}
+        <a href="/dashboard">Member space</a>
+        {% if not current_user %}<a href="/login">Log in</a>{% endif %}
+      {% else %}<a href="/#next">What comes next</a>{% endif %}
+      {% if features.roles and current_user and current_user.role == "admin" %}<a href="/admin">Admin</a>{% endif %}
+    </nav>
+  </header>
+  <main id="main" class="wrap" tabindex="-1">{% block content %}{% endblock %}</main>
+  <footer class="site-footer wrap"><span>{{ brand.name }}</span><span>A small project, built thoughtfully.</span></footer>
+</body>
+</html>

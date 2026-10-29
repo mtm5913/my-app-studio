@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}API map · {{ brand.name }}{% endblock %}
+{% block content %}
+<section class="panel">
+  <p class="eyebrow">Developer reference</p><h1>One app. Two ways to use it.</h1>
+  <p>The pages use HTML forms. The API uses JSON and HTTP status codes. The server enforces the same access rules for both.</p>
+  <p><a href="/health">GET /health</a> returns public JSON. <a href="/openapi.json">OpenAPI schema</a> describes the routes actually implemented in this version.</p>
+  {% if features.accounts %}
+  <ul>
+    <li><code>GET /api/csrf</code> starts a pre-login session and returns a CSRF token.</li>
+    <li><code>POST /api/signup</code> creates a member; <code>POST /api/login</code> signs in. Both accept username/password JSON and the <code>X-CSRF-Token</code> header.</li>
+    <li><a href="/api/me">GET /api/me</a> returns the current user, or 401 when not logged in.</li>
+    <li><code>POST /api/logout</code> revokes the current session. A copied old JWT must stop working.</li>
+    {% if features.roles %}<li><a href="/api/admin">GET /api/admin</a>: anonymous → 401; member → 403; admin → 200.</li>{% endif %}
+  </ul>
+  <p>JWTs are signed, not encrypted. This app keeps them in an HttpOnly cookie and checks the current SQLite session and role on each protected request. Never put passwords or tokens in a URL.</p>
+  {% else %}<p>Accounts are not implemented yet. Their routes will appear here as you build the next lesson.</p>{% endif %}
+</section>
+{% endblock %}

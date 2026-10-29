@@ -1,0 +1,19 @@
+[tool.black]
+line-length = 88
+target-version = ["py312"]
+
+[tool.pylint.main]
+py-version = "3.12"
+persistent = false
+
+[tool.pylint.reports]
+score = false
+reports = false
+
+[tool.pylint.format]
+max-line-length = 88
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["e2e: actual Chromium browser journeys"]
+addopts = "--strict-markers"

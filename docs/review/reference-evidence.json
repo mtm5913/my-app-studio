@@ -1,0 +1,32 @@
+[
+  {
+    "lesson": "APP-001",
+    "branch": "reference/app-001",
+    "head": "922a2df81fddcd284dec1bc8c64e7d0bd03067d7",
+    "url": "https://github.com/kaw393939/is373-app-studio/actions/runs/40531319871",
+    "jobs": {
+      "windows": "success",
+      "check": "success"
+    }
+  },
+  {
+    "lesson": "APP-002",
+    "branch": "reference/app-002",
+    "head": "2a872aadccbb8d9ea36caac87486b098c6b43e88",
+    "url": "https://github.com/kaw393939/is373-app-studio/actions/runs/40531328066",
+    "jobs": {
+      "windows": "success",
+      "check": "success"
+    }
+  },
+  {
+    "lesson": "APP-003",
+    "branch": "reference/app-003",
+    "head": "36ff7ca9a63e592286adcf56190811764dfbc091",
+    "url": "https://github.com/kaw393939/is373-app-studio/actions/runs/40531336940",
+    "jobs": {
+      "check": "success",
+      "windows": "success"
+    }
+  }
+]

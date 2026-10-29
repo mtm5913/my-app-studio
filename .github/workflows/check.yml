@@ -1,0 +1,57 @@
+name: Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHONUTF8: '1'
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prepare the pinned environment
+        run: python3 studio.py setup
+      - name: Install Chromium system dependencies
+        run: .venv/bin/python -m playwright install --with-deps chromium
+      - name: Check the declared stage, including the browser
+        run: python3 studio.py check
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: failed-browser-check
+          path: test-results/
+          if-no-files-found: ignore
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prepare the pinned environment and Chromium
+        run: python studio.py setup
+      - name: Check the declared stage, including the browser
+        run: python studio.py check
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: failed-windows-browser-check
+          path: test-results/
+          if-no-files-found: ignore

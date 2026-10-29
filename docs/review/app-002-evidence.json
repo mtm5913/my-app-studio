@@ -1,0 +1,41 @@
+{
+  "lesson": "APP-002",
+  "checks": {
+    "current": true,
+    "observed_at": "2026-10-27T15:18:36.747571+00:00"
+  },
+  "learner_records": {
+    "Prediction": true,
+    "Check interpretation": true,
+    "Browser observation": true,
+    "Keep decision": true,
+    "Review": true
+  },
+  "github": {
+    "issue": true,
+    "pr": true,
+    "ci": true,
+    "merged": true,
+    "details": [],
+    "issue_state": "closed",
+    "issue_created_at": "2026-10-27T15:13:46Z",
+    "publication_shas": [
+      "25b25d22ee80ab91a6fc9c73da9d9c19d0eb6c9f",
+      "6179918f0c5aed9620cd080b2c54f4205ab89689"
+    ],
+    "checks": {
+      "check": "success",
+      "windows": "success"
+    }
+  },
+  "publication": {
+    "tracked": true,
+    "clean": true,
+    "revision_matches": true
+  },
+  "ready_for_instructor_review": true,
+  "scope": "Record presence and selected checks; no automatic grade or proof of learning.",
+  "evaluation_kind": "Instructor-operated synthetic learner record; actual technical/GitHub checks, not human learning evidence.",
+  "trial_repository": "https://github.com/kaw393939/is373-app-trial-1027",
+  "selected_revision": "6179918f0c5aed9620cd080b2c54f4205ab89689"
+}
