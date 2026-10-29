@@ -7,8 +7,8 @@ actual evidence; pending is a valid state. Keep explanations/help in
 ## Current stage
 
 - **Current feature:** APP-002.
-- **Status:** APP-001 merged in PR #2. APP-002 implementation and full local checks passed; learner interpretation, revisit observation and keep decision recorded. Summary reviewed and publication authorized; PR and CI pending.
-- **Next step:** Publish reviewed APP-002 PR and verify Linux/Windows CI.
+- **Status:** APP-001 merged in PR #2. APP-002 implementation and full local checks passed; learner interpretation, revisit observation and keep decision recorded. Summary reviewed and publication authorized; PR #4 open; full CI passed for the implementation commit, latest revision requires verification.
+- **Next step:** Review [APP-002 PR #4](https://github.com/mtm5913/my-app-studio/pull/4) and latest Linux/Windows CI before a merge decision.
 - **Implementation marker:** `studio.json` is now `implemented_through: 2` after passing the cumulative APP-002 contracts.
 
 This repository owns application code. Server/proxy changes and production
@@ -43,7 +43,7 @@ helpers; keep data local. New accounts cannot choose their role.
 |---|---|
 | Expected public/private behavior and account flow | Public /preview shows sample content only. /dashboard requires login and preserves next=/dashboard through login/signup. Standalone login returns /. Only / and /dashboard are allowed return destinations. Logout revokes the session server-side. |
 | Valid and rejected cases to demonstrate | Valid member signup/login, malformed/duplicate/role-injected signup, wrong login, missing/cross-origin CSRF, anonymous/expired/revoked sessions, unsafe redirects and both login destinations. |
-| Own issue / branch / PR | [Issue #3](https://github.com/mtm5913/my-app-studio/issues/3), codex/app-002-accounts; PR pending. |
+| Own issue / branch / PR | [Issue #3](https://github.com/mtm5913/my-app-studio/issues/3), codex/app-002-accounts; [PR #4](https://github.com/mtm5913/my-app-studio/pull/4). |
 
 **Keep when:** the agreed forms/API work; duplicate/invalid signup and wrong
 credentials are rejected; passwords are hashed; authentication uses validated,
@@ -82,7 +82,7 @@ customer research or claims that a timestamp proves learning.
 | Feature | Files / own issue / PR | Actual checks and learner observations | Kept / GitHub state |
 |---|---|---|---|
 | APP-001 | `app/brand.json`, `app/templates/home.html`, `app/templates/base.html`, `app/static/logo.svg`, `app/static/site.css`; [issue #1](https://github.com/mtm5913/my-app-studio/issues/1) | Full explicit APP-001 check passed, then normal full check passed after marker update: 98 foundation + 2 acceptance + 2 Chromium tests. AI reviewed desktop/narrow rendering, keyboard skip link and account boundary. Learner prediction and phone-width check interpretation recorded. Learner requested friend-focused copy and “Bite by bite, we can figure it out together,” then chose to keep the revised companion feel. | Keep decision recorded; summary reviewed; [PR #2](https://github.com/mtm5913/my-app-studio/pull/2) open. [Initial CI run](https://github.com/mtm5913/my-app-studio/actions/runs/40962891203): Linux passed at observation; Windows pending. Verify latest revision before merge |
-| APP-002 | `app/features/accounts.py`, account/preview/dashboard templates, shared navigation/styles, `tests/test_account_navigation.py`; [issue #3](https://github.com/mtm5913/my-app-studio/issues/3) | Full explicit APP-002 check passed: 110 foundation/navigation tests, 14 cumulative contracts, 2 Chromium journeys. Normal full check after marker update also passed. AI reviewed account page desktop/390px layout, private boundary, input handling and safe returns. Starter redirect assertions intentionally changed for approved home/return behavior; auth/CSRF/revocation assertions retained. | Learner interpreted old-session rejection, reported returning to login on revisiting Member space after logout, and chose to keep the intended flow. Summary review and PR pending |
+| APP-002 | `app/features/accounts.py`, account/preview/dashboard templates, shared navigation/styles, `tests/test_account_navigation.py`; [issue #3](https://github.com/mtm5913/my-app-studio/issues/3) | Full explicit APP-002 check passed: 110 foundation/navigation tests, 14 cumulative contracts, 2 Chromium journeys. Normal full check after marker update also passed. AI reviewed account page desktop/390px layout, private boundary, input handling and safe returns. Starter redirect assertions intentionally changed for approved home/return behavior; auth/CSRF/revocation assertions retained. | Learner interpreted old-session rejection, reported returning to login on revisiting Member space after logout, and chose to keep the intended flow. Summary reviewed; [PR #4](https://github.com/mtm5913/my-app-studio/pull/4) open. [Full CI](https://github.com/mtm5913/my-app-studio/actions/runs/40965878512) passed check/windows for 2025fa3; verify latest revision before merge |
 | APP-003 | Pending | Unfinished; explicit contracts not yet passed | Pending |
 
 The instructor's reference branches show possible implementations. They do not
