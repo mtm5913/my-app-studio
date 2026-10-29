@@ -7,9 +7,9 @@ actual evidence; pending is a valid state. Keep explanations/help in
 ## Current stage
 
 - **Current feature:** APP-001.
-- **Status:** Neutral foundation; learner scope and decisions pending.
-- **Next step:** Confirm the local clone and SSH origin, run setup and try the page.
-- **Implementation marker:** `studio.json` starts at `implemented_through: 0`.
+- **Status:** APP-001 Olive homepage implemented; full checks and AI review passed. Learner check interpretation, copy revisions and keep decision recorded; summary reviewed and publication authorized.
+- **Next step:** Publish reviewed PR and verify Linux/Windows CI.
+- **Implementation marker:** `studio.json` is now `implemented_through: 1` after passing the APP-001 contracts.
 
 This repository owns application code. Server/proxy changes and production
 deployment are outside these three local-development lessons. Prepared helpers
@@ -23,10 +23,10 @@ Keep account actions honest about their unfinished state.
 
 | Decision | Agreement |
 |---|---|
-| Visitor and concrete use situation | Pending |
-| Reused IS117 brand, or name / promise / primary archetype | Pending |
-| One visible choice and visitor benefit | Pending |
-| Own issue / branch / PR | Pending |
+| Visitor and concrete use situation | Someone managing their own blood sugar, viewing meals alongside readings to notice patterns. |
+| Reused IS117 brand, or name / promise / primary archetype | New identity: Olive. Companion character. Promise: “A little support for noticing your everyday patterns.” |
+| One visible choice and visitor benefit | Soft greens and friendly language: learner hopes visitors feel safe and cared for. No unimplemented privacy or medical claims. |
+| Own issue / branch / PR | [Issue #1](https://github.com/mtm5913/my-app-studio/issues/1), branch `codex/app-001-olive`; PR pending. |
 
 **Keep when:** the agreed identity is visible and usable at desktop/narrow widths;
 full foundation + APP-001 checks pass; AI review and the learner's actual check
@@ -81,7 +81,7 @@ customer research or claims that a timestamp proves learning.
 
 | Feature | Files / own issue / PR | Actual checks and learner observations | Kept / GitHub state |
 |---|---|---|---|
-| APP-001 | Pending | Not run; learner contributions pending | Pending |
+| APP-001 | `app/brand.json`, `app/templates/home.html`, `app/templates/base.html`, `app/static/logo.svg`, `app/static/site.css`; [issue #1](https://github.com/mtm5913/my-app-studio/issues/1) | Full explicit APP-001 check passed, then normal full check passed after marker update: 98 foundation + 2 acceptance + 2 Chromium tests. AI reviewed desktop/narrow rendering, keyboard skip link and account boundary. Learner prediction and phone-width check interpretation recorded. Learner requested friend-focused copy and “Bite by bite, we can figure it out together,” then chose to keep the revised companion feel. | Keep decision recorded; summary reviewed; PR and CI pending |
 | APP-002 | Pending | Unfinished; explicit contracts not yet passed | Pending |
 | APP-003 | Pending | Unfinished; explicit contracts not yet passed | Pending |
 

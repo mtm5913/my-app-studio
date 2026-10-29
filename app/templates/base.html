@@ -18,15 +18,15 @@
   <header class="site-header wrap">
     <a class="wordmark" href="/" aria-label="{{ brand.name }} home"><img src="/static/logo.svg" alt="" width="36" height="36">{{ brand.name }}</a>
     <nav aria-label="Main navigation">
-      <a href="/#idea">The idea</a>
+      <a href="/#idea">Meet Olive</a>
       {% if features.accounts %}
         <a href="/dashboard">Member space</a>
         {% if not current_user %}<a href="/login">Log in</a>{% endif %}
-      {% else %}<a href="/#next">What comes next</a>{% endif %}
+      {% else %}<a href="/#next">What’s ahead</a>{% endif %}
       {% if features.roles and current_user and current_user.role == "admin" %}<a href="/admin">Admin</a>{% endif %}
     </nav>
   </header>
   <main id="main" class="wrap" tabindex="-1">{% block content %}{% endblock %}</main>
-  <footer class="site-footer wrap"><span>{{ brand.name }}</span><span>A small project, built thoughtfully.</span></footer>
+  <footer class="site-footer wrap"><span>{{ brand.name }}</span><span>A little care, every day.</span></footer>
 </body>
 </html>
