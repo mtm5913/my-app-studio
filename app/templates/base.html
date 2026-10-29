@@ -22,6 +22,7 @@
       {% if features.accounts %}
         <a href="/dashboard">Member space</a>
         <a href="/preview">Preview</a>
+        {% if current_user %}<a href="/ask">Ask Olive</a>{% endif %}
         {% if not current_user %}<a href="/login">Log in</a>{% endif %}
       {% else %}<a href="/#next">What’s ahead</a>{% endif %}
       {% if features.roles and current_user and current_user.role == "admin" %}<a href="/admin">Admin</a>{% endif %}

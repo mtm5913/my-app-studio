@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Ask Olive · Olive{% endblock %}
+{% block content %}
+<section class="ask-space" aria-labelledby="ask-title">
+  <p class="eyebrow">A little curiosity, together</p>
+  <h1 id="ask-title">Ask Olive</h1>
+  <p class="lede">Food questions? Let’s explore them, bite by bite.</p>
+  <p>Try “What are some ways to add beans to lunch?” or “What does fiber do?”</p>
+  <p class="field-help">General food information from AI, which can make mistakes. For personal blood sugar, treatment or medication advice, talk with your healthcare professional.</p>
+  {% if not connected %}<p class="setup-note" role="status">Ask Olive isn’t connected yet. Your project owner needs to add an OpenAI API key before questions can be answered.</p>{% endif %}
+  {% if error %}<p role="alert">{{ error }}</p>{% endif %}
+  {% if result %}
+  <section class="olive-answer" aria-labelledby="answer-title">
+    <h2 id="answer-title">A little food for thought</h2>
+    <p class="answer-text">{{ result.answer }}</p>
+    {% if result.sources %}<h3>Sources</h3><ul>{% for source in result.sources %}<li><a href="{{ source.url }}" target="_blank" rel="noopener noreferrer">{{ source.title }}</a></li>{% endfor %}</ul>{% endif %}
+  </section>
+  {% endif %}
+  <form method="post" action="/ask" class="ask-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label for="question">{% if result %}Ask another food question{% else %}Your food question{% endif %}</label>
+    <textarea id="question" name="question" rows="4" minlength="3" maxlength="1200" required aria-describedby="sharing-note" placeholder="What would you like to learn about food?"></textarea>
+    <p id="sharing-note" class="field-help">Only this question is sent to OpenAI. Keep names, blood sugar readings and other personal health details out of it. Olive doesn’t save chat history. OpenAI’s own data policies still apply.</p>
+    <label class="check-label"><input type="checkbox" name="search" value="true"> Search food and health sources on the web (may use additional API credit)</label>
+    <label class="check-label"><input type="checkbox" name="share_question" value="true" required> I agree to send this question to OpenAI.</label>
+    <button class="button" type="submit" {% if not connected %}disabled{% endif %}>Ask Olive</button>
+    <p class="field-help">Up to 10 questions per member per UTC day. Each question starts fresh.</p>
+  </form>
+
+</section>
+{% endblock %}

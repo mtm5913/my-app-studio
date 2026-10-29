@@ -36,3 +36,9 @@ Accuracy approval is not proof of understanding. Label simulated trials explicit
 - Review: Learner reviewed the new APP-003 excerpts and authorized commit, push and PR in this chat.
 - Help/gaps: AI proposed an admin overview limited to usernames and roles; learner approved. AI explained 403 and implemented server checks using prepared helpers, tests and layout review. AI performed the local test-account promotion. Automated checks also covered downgrade with an existing session; no learner observation of downgrade is claimed.
 - Evidence links / next step: [Issue #5](https://github.com/mtm5913/my-app-studio/issues/5); full APP-003 and normal checks passed (111 foundation, 18 cumulative contracts, 2 Chromium journeys). Accuracy review recorded; commit/PR and CI remain pending.
+
+## Extension · Ask Olive layout
+
+- Browser observation: Learner requested the answer appear above the question box, with the box below for another question. After the revision, learner confirmed it matched their expectation (AI paraphrase).
+- Keep decision: Learner said “I would keep this version, the outcome makes more sense with the answer appearing before the question.”
+- Help/review: AI implemented the requested layout change. Learner reviewed this summary and authorized commit, push and PR before publication.

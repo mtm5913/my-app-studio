@@ -87,3 +87,26 @@ customer research or claims that a timestamp proves learning.
 
 The instructor's reference branches show possible implementations. They do not
 establish this repository's completion or the learner's own reasoning.
+
+## Extension · Ask Olive
+
+Agreed after APP-003: general food-information questions matching Olive’s companion
+identity. Member-only `/ask` and `/api/food-chat`, with explicit question-sharing
+consent, existing CSRF/session checks, optional web search and HTTPS source links.
+Only the submitted question goes to OpenAI; no account identifiers, saved readings
+or conversation history are attached. This is general information, not personal
+medical guidance. Provider storage requested off (`store: false`); this is not a
+claim of zero provider retention.
+
+Key stays in ignored local `.env` or server environment; `.env.example` has no key.
+Uses the Responses API with configurable model (default `gpt-4.1-mini`), 700 output
+tokens, 30-second timeout, at most one optional search tool call. Persistent limits:
+10 attempts per member and 100 total per UTC day. These are request caps, not an
+exact dollar spending cap. Search may add charges. Live plain and search requests succeeded after removing
+unsupported gpt-4.1-mini domain filters; preferred source domains are instructions,
+not an enforced allowlist.
+Branch: `codex/olive-food-chat`. Learner inspected the revised layout and chose to keep; summary reviewed and
+commit/push/PR authorized.
+
+Learner requested the answer appear above the question form, with the next question
+box underneath. Revised the result layout and subsequent-question label accordingly.

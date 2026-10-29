@@ -157,3 +157,34 @@ application feature is required in these three lessons.
 
 [Instructor orientation and evaluation records](docs/instructor.md) are optional
 background; students start with this README.
+
+## Ask Olive · optional OpenAI extension
+
+Members can open `/ask` for general food questions. Sign in first; submitting a
+question requires agreeing to send it to OpenAI. No saved readings or account
+identity are attached. Each question starts fresh and chat history is not saved.
+AI answers can be wrong and are not personalized medical advice.
+
+1. Set up API billing in your own [OpenAI Platform account](https://platform.openai.com/).
+   Add the credit you intend to use yourself; never paste payment details here.
+2. Copy `.env.example` to `.env` if the local file does not already exist. Enter
+   your key after `OPENAI_API_KEY=` in that local file. Keep it out of screenshots,
+   chat and GitHub. `.env` is ignored; only the empty example belongs in Git.
+3. Leave `OPENAI_MODEL=gpt-4.1-mini` or choose a model available to your API project
+   that supports Responses and web search. Refresh `/ask` after saving the key.
+4. Try a general question such as “What are ways to cook beans?” Optional web
+   search can add charges and displays returned source links.
+
+The server calls the fixed OpenAI Responses endpoint with a 30-second timeout,
+700 maximum output tokens, and at most one optional search tool call. Limits are
+10 attempts per member and 100 total per UTC day, stored locally across restarts.
+Failed upstream attempts count toward limits. These limits do not guarantee an
+exact dollar cap. Configure your API project's billing controls as well.
+
+`store: false` requests no stored Responses object; OpenAI's other data retention
+policies still apply. Automated tests mock all provider calls and spend no credit.
+Live behavior requires a configured key and API credit. Never use production
+health details in a class demo. If a key is exposed, revoke it and create another.
+
+API references: [Responses text generation](https://developers.openai.com/api/docs/guides/text),
+[web search](https://developers.openai.com/api/docs/guides/tools-web-search).
