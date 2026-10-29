@@ -178,3 +178,14 @@ def _check_role_boundary(page, server, username):
             expect(
                 page.get_by_role("heading", name="Administration", exact=True)
             ).to_be_visible()
+            expect(page.get_by_role("table")).to_be_visible()
+            page.set_viewport_size({"width": 390, "height": 844})
+            assert page.evaluate(
+                "document.documentElement.scrollWidth <= window.innerWidth"
+            )
+            expect(page.get_by_role("link", name="Admin", exact=True)).to_be_visible()
+            page.screenshot(
+                path=str(
+                    Path(server.environment["APP_DATABASE"]).parent / "admin-mobile.png"
+                )
+            )
