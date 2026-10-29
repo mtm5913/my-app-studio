@@ -7,8 +7,8 @@ actual evidence; pending is a valid state. Keep explanations/help in
 ## Current stage
 
 - **Current feature:** APP-003.
-- **Status:** APP-002 merged in PR #4; issue #3 closed and post-merge checks passed. APP-003 full checks passed; learner observed member denial and admin access and chose to keep. Summary accuracy reviewed; [PR #6](https://github.com/mtm5913/my-app-studio/pull/6) open.
-- **Next step:** Verify latest APP-003 PR CI before a merge decision.
+- **Status:** APP-001, APP-002 and APP-003 merged; lesson issues #1, #3 and #5 closed. Ask Olive extension merged in [PR #7](https://github.com/mtm5913/my-app-studio/pull/7). [Latest post-merge CI](https://github.com/mtm5913/my-app-studio/actions/runs/40973823631) passed both check and windows.
+- **Next step:** Submit this completed repository for instructor review.
 - **Implementation marker:** `studio.json` is now `implemented_through: 3` after passing the cumulative APP-003 contracts.
 
 This repository owns application code. Server/proxy changes and production
@@ -41,7 +41,7 @@ helpers; keep data local. New accounts cannot choose their role.
 
 | Decision | Agreement |
 |---|---|
-| Expected public/private behavior and account flow | Public /preview shows sample content only. /dashboard requires login and preserves next=/dashboard through login/signup. Standalone login returns /. Only / and /dashboard are allowed return destinations. Logout revokes the session server-side. |
+| Expected public/private behavior and account flow | Public /preview shows sample content only. /dashboard requires login and preserves next=/dashboard through login/signup. Standalone login returns /. Original lesson return destinations were / and /dashboard; the Ask Olive extension also allows /ask. Logout revokes the session server-side. |
 | Valid and rejected cases to demonstrate | Valid member signup/login, malformed/duplicate/role-injected signup, wrong login, missing/cross-origin CSRF, anonymous/expired/revoked sessions, unsafe redirects and both login destinations. |
 | Own issue / branch / PR | [Issue #3](https://github.com/mtm5913/my-app-studio/issues/3), codex/app-002-accounts; [PR #4](https://github.com/mtm5913/my-app-studio/pull/4). |
 
@@ -81,9 +81,9 @@ customer research or claims that a timestamp proves learning.
 
 | Feature | Files / own issue / PR | Actual checks and learner observations | Kept / GitHub state |
 |---|---|---|---|
-| APP-001 | `app/brand.json`, `app/templates/home.html`, `app/templates/base.html`, `app/static/logo.svg`, `app/static/site.css`; [issue #1](https://github.com/mtm5913/my-app-studio/issues/1) | Full explicit APP-001 check passed, then normal full check passed after marker update: 98 foundation + 2 acceptance + 2 Chromium tests. AI reviewed desktop/narrow rendering, keyboard skip link and account boundary. Learner prediction and phone-width check interpretation recorded. Learner requested friend-focused copy and “Bite by bite, we can figure it out together,” then chose to keep the revised companion feel. | Keep decision recorded; summary reviewed; [PR #2](https://github.com/mtm5913/my-app-studio/pull/2) open. [Initial CI run](https://github.com/mtm5913/my-app-studio/actions/runs/40962891203): Linux passed at observation; Windows pending. Verify latest revision before merge |
-| APP-002 | `app/features/accounts.py`, account/preview/dashboard templates, shared navigation/styles, `tests/test_account_navigation.py`; [issue #3](https://github.com/mtm5913/my-app-studio/issues/3) | Full explicit APP-002 check passed: 110 foundation/navigation tests, 14 cumulative contracts, 2 Chromium journeys. Normal full check after marker update also passed. AI reviewed account page desktop/390px layout, private boundary, input handling and safe returns. Starter redirect assertions intentionally changed for approved home/return behavior; auth/CSRF/revocation assertions retained. | Learner interpreted old-session rejection, reported returning to login on revisiting Member space after logout, and chose to keep the intended flow. Summary reviewed; [PR #4](https://github.com/mtm5913/my-app-studio/pull/4) open. [Full CI](https://github.com/mtm5913/my-app-studio/actions/runs/40965878512) passed check/windows for 2025fa3; verify latest revision before merge |
-| APP-003 | `app/features/roles.py`, admin/forbidden templates, table styling, admin overview and browser tests; [issue #5](https://github.com/mtm5913/my-app-studio/issues/5) | Full checks passed: 111 foundation, 18 cumulative contracts, 2 Chromium. Member denied; admin allowed; existing-session role changes enforced. Learner reported member denial then admin page after promotion. | Learner chose to keep because access requires admin. Summary reviewed; [PR #6](https://github.com/mtm5913/my-app-studio/pull/6) open; latest CI pending verification. |
+| APP-001 | `app/brand.json`, `app/templates/home.html`, `app/templates/base.html`, `app/static/logo.svg`, `app/static/site.css`; [issue #1](https://github.com/mtm5913/my-app-studio/issues/1) | Full explicit APP-001 check passed, then normal full check passed after marker update: 98 foundation + 2 acceptance + 2 Chromium tests. AI reviewed desktop/narrow rendering, keyboard skip link and account boundary. Learner prediction and phone-width check interpretation recorded. Learner requested friend-focused copy and “Bite by bite, we can figure it out together,” then chose to keep the revised companion feel. | Keep decision recorded; summary reviewed; [PR #2](https://github.com/mtm5913/my-app-studio/pull/2) merged; issue #1 closed. Both CI jobs passed; current cumulative main validation is linked above. |
+| APP-002 | `app/features/accounts.py`, account/preview/dashboard templates, shared navigation/styles, `tests/test_account_navigation.py`; [issue #3](https://github.com/mtm5913/my-app-studio/issues/3) | Full explicit APP-002 check passed: 110 foundation/navigation tests, 14 cumulative contracts, 2 Chromium journeys. Normal full check after marker update also passed. AI reviewed account page desktop/390px layout, private boundary, input handling and safe returns. Starter redirect assertions intentionally changed for approved home/return behavior; auth/CSRF/revocation assertions retained. | Learner interpreted old-session rejection, reported returning to login on revisiting Member space after logout, and chose to keep the intended flow. Summary reviewed; [PR #4](https://github.com/mtm5913/my-app-studio/pull/4) merged; issue #3 closed. [Post-merge CI](https://github.com/mtm5913/my-app-studio/actions/runs/40967074526) passed check/windows. |
+| APP-003 | `app/features/roles.py`, admin/forbidden templates, table styling, admin overview and browser tests; [issue #5](https://github.com/mtm5913/my-app-studio/issues/5) | Full checks passed: 111 foundation, 18 cumulative contracts, 2 Chromium. Member denied; admin allowed; existing-session role changes enforced. Learner reported member denial then admin page after promotion. | Learner chose to keep because access requires admin. Summary reviewed; [PR #6](https://github.com/mtm5913/my-app-studio/pull/6) merged; issue #5 closed. [Post-merge CI](https://github.com/mtm5913/my-app-studio/actions/runs/40970219946) passed check/windows. |
 
 The instructor's reference branches show possible implementations. They do not
 establish this repository's completion or the learner's own reasoning.
@@ -106,7 +106,7 @@ exact dollar spending cap. Search may add charges. Live plain and search request
 unsupported gpt-4.1-mini domain filters; preferred source domains are instructions,
 not an enforced allowlist.
 Branch: `codex/olive-food-chat`. Learner inspected the revised layout and chose to keep; summary reviewed and
-commit/push/PR authorized.
+published in [PR #7](https://github.com/mtm5913/my-app-studio/pull/7), merged at `fbe96f3`. Full checks passed: 121 foundation tests, 18 cumulative contracts and 2 Chromium journeys; both post-merge CI jobs passed (linked above).
 
 Learner requested the answer appear above the question form, with the next question
 box underneath. Revised the result layout and subsequent-question label accordingly.

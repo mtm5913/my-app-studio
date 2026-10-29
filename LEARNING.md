@@ -15,7 +15,7 @@ Accuracy approval is not proof of understanding. Label simulated trials explicit
 - Keep decision: Learner said, “I feel better about keeping this homepage. It matches more of the companion vibe I had in mind.”
 - Review: Learner reviewed the summarized APP-001 excerpts and authorized commit, push and PR in this chat.
 - Help/gaps: Learner chose Olive, the Companion character and soft greens to feel like a caring buddy when sharing personal information (AI paraphrase). AI proposed the promise and homepage scope; learner approved. Earlier neutral-page observation: ivory/forest green and generic “a real application” wording. AI implements design and checks; branding does not establish data privacy. Learner reviewed these excerpts before publication.
-- Evidence links / next step: [Issue #1](https://github.com/mtm5913/my-app-studio/issues/1); Olive homepage implemented. Full APP-001 checks passed after copy revisions (98 foundation + 2 acceptance + 2 Chromium). Learner interpretation, requested copy revisions and keep reason recorded; accuracy review recorded; PR and CI pending.
+- Evidence links / next step: [Issue #1](https://github.com/mtm5913/my-app-studio/issues/1); Olive homepage implemented. Full APP-001 checks passed after copy revisions (98 foundation + 2 acceptance + 2 Chromium). Learner interpretation, requested copy revisions and keep reason recorded; accuracy review recorded; [PR #2](https://github.com/mtm5913/my-app-studio/pull/2) merged and issue #1 closed. Both CI jobs passed.
 
 ## APP-002
 
@@ -25,7 +25,7 @@ Accuracy approval is not proof of understanding. Label simulated trials explicit
 - Keep decision: Learner said “keep this account flow, because it did what I intended.”
 - Review: Learner reviewed the new APP-002 summary and approved commit, push and PR in this chat.
 - Help/gaps: AI proposed a public sample preview separate from the guarded dashboard and exact internal return destinations; learner approved. AI reused prepared password/session/CSRF helpers and updated starter navigation assertions to the approved behavior without removing authentication assertions. No tracking actions implemented. Learner reviewed the excerpts before publication.
-- Evidence links / next step: [Issue #3](https://github.com/mtm5913/my-app-studio/issues/3); Full explicit APP-002 and normal checks passed (110 foundation/navigation, 14 cumulative acceptance, 2 Chromium). Learner check interpretation, revisit observation and keep reason recorded. Accuracy review recorded; PR and CI pending.
+- Evidence links / next step: [Issue #3](https://github.com/mtm5913/my-app-studio/issues/3); Full explicit APP-002 and normal checks passed (110 foundation/navigation, 14 cumulative acceptance, 2 Chromium). Learner check interpretation, revisit observation and keep reason recorded. Accuracy review recorded; [PR #4](https://github.com/mtm5913/my-app-studio/pull/4) merged and issue #3 closed. [Post-merge CI](https://github.com/mtm5913/my-app-studio/actions/runs/40967074526) passed both jobs.
 
 ## APP-003
 
@@ -35,10 +35,12 @@ Accuracy approval is not proof of understanding. Label simulated trials explicit
 - Keep decision: Learner said “keep this permission flow because it only allows users with admin access.”
 - Review: Learner reviewed the new APP-003 excerpts and authorized commit, push and PR in this chat.
 - Help/gaps: AI proposed an admin overview limited to usernames and roles; learner approved. AI explained 403 and implemented server checks using prepared helpers, tests and layout review. AI performed the local test-account promotion. Automated checks also covered downgrade with an existing session; no learner observation of downgrade is claimed.
-- Evidence links / next step: [Issue #5](https://github.com/mtm5913/my-app-studio/issues/5); full APP-003 and normal checks passed (111 foundation, 18 cumulative contracts, 2 Chromium journeys). Accuracy review recorded; commit/PR and CI remain pending.
+- Evidence links / next step: [Issue #5](https://github.com/mtm5913/my-app-studio/issues/5); full APP-003 and normal checks passed (111 foundation, 18 cumulative contracts, 2 Chromium journeys). Accuracy review recorded; [PR #6](https://github.com/mtm5913/my-app-studio/pull/6) merged and issue #5 closed. [Post-merge CI](https://github.com/mtm5913/my-app-studio/actions/runs/40970219946) passed both jobs.
 
 ## Extension · Ask Olive layout
 
 - Browser observation: Learner requested the answer appear above the question box, with the box below for another question. After the revision, learner confirmed it matched their expectation (AI paraphrase).
 - Keep decision: Learner said “I would keep this version, the outcome makes more sense with the answer appearing before the question.”
 - Help/review: AI implemented the requested layout change. Learner reviewed this summary and authorized commit, push and PR before publication.
+
+Extension publication: [PR #7](https://github.com/mtm5913/my-app-studio/pull/7) merged; [post-merge CI](https://github.com/mtm5913/my-app-studio/actions/runs/40973823631) passed both jobs.
