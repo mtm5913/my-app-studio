@@ -14,7 +14,7 @@ router = APIRouter()
 
 def destination(value):
     """Accept exact known internal destinations, never arbitrary redirect URLs."""
-    return value if value in {"/", "/dashboard"} else "/"
+    return value if value in {"/", "/dashboard", "/ask"} else "/"
 
 
 def account_url(path, target):

@@ -59,6 +59,12 @@ def initialize(settings: Settings) -> None:
                 expires_at INTEGER NOT NULL,
                 revoked INTEGER NOT NULL DEFAULT 0 CHECK(revoked IN (0, 1))
             );
+            CREATE TABLE IF NOT EXISTS ai_usage (
+                day TEXT NOT NULL,
+                user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                attempts INTEGER NOT NULL,
+                PRIMARY KEY(day, user_id)
+            );
             CREATE TABLE IF NOT EXISTS login_attempts (
                 bucket TEXT PRIMARY KEY,
                 started_at INTEGER NOT NULL,

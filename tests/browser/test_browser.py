@@ -139,6 +139,15 @@ def test_current_lesson_browser_journey(page, server):
     expect(
         page.get_by_role("heading", name="Your member space", exact=True)
     ).to_be_visible()
+    page.goto(server.url + "/ask")
+    expect(page.get_by_role("heading", name="Ask Olive", exact=True)).to_be_visible()
+    expect(page.get_by_label("Your food question", exact=True)).to_be_visible()
+    directory = Path(server.environment["APP_DATABASE"]).parent
+    page.screenshot(path=str(directory / "ask-desktop.png"))
+    page.set_viewport_size({"width": 390, "height": 844})
+    assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
+    page.screenshot(path=str(directory / "ask-mobile.png"), full_page=True)
+    page.set_viewport_size({"width": 1280, "height": 720})
     cookies = page.context.cookies()
     session = next(cookie for cookie in cookies if cookie["name"] == "studio-session")
     assert session["httpOnly"] and session["sameSite"] == "Lax"
