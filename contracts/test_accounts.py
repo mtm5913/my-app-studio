@@ -247,7 +247,8 @@ def test_duplicate_html_signup_retains_username_without_password(client):
 def test_browser_forms_have_a_recoverable_signup_login_logout_path(client):
     """HTML navigation reaches the same guarded services as the JSON endpoints."""
     assert (
-        client.get("/dashboard", follow_redirects=False).headers["location"] == "/login"
+        client.get("/dashboard", follow_redirects=False).headers["location"]
+        == "/login?next=%2Fdashboard"
     )
     signup = client.get("/signup")
     assert signup.status_code == 200
@@ -261,7 +262,7 @@ def test_browser_forms_have_a_recoverable_signup_login_logout_path(client):
     response = client.post(
         "/login", data={**credentials(), "csrf_token": token}, follow_redirects=False
     )
-    assert response.status_code == 303 and response.headers["location"] == "/dashboard"
+    assert response.status_code == 303 and response.headers["location"] == "/"
     dashboard = client.get("/dashboard")
     assert dashboard.status_code == 200 and "learner" in dashboard.text
     token = re.search(r'name="csrf_token" value="([^"]+)"', dashboard.text).group(1)

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Create account' if signup else 'Log in' }} · Olive{% endblock %}
+{% block content %}
+<section class="form-stack account-card" aria-labelledby="account-title">
+  <p class="eyebrow">A little space of your own</p>
+  <h1 id="account-title">{{ 'Create account' if signup else 'Log in' }}</h1>
+  <p>{{ 'Start with a throwaway local test account.' if signup else 'Welcome back. Let’s pick up together.' }}</p>
+  {% if error %}<p role="alert">{{ error }}</p>{% endif %}
+  <form method="post" action="{{ '/signup' if signup else '/login' }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <input type="hidden" name="next" value="{{ target }}">
+    <label for="username">Username</label>
+    <input id="username" name="username" value="{{ username }}" autocomplete="username" minlength="{{ 3 if signup else 1 }}" maxlength="32" required aria-describedby="username-help">
+    <p id="username-help" class="field-help">{{ '3–32 letters, numbers or underscores.' if signup else 'The username you chose for Olive.' }}</p>
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" autocomplete="{{ 'new-password' if signup else 'current-password' }}" minlength="{{ 15 if signup else 1 }}" maxlength="128" required aria-describedby="password-help">
+    <p id="password-help" class="field-help">{{ '15–128 characters. Use a test passphrase you don’t use elsewhere.' if signup else 'Use the password you chose for Olive.' }}</p>
+    <button class="button" type="submit">{{ 'Create account' if signup else 'Log in' }}</button>
+  </form>
+  <p class="account-switch">{% if signup %}Already have an account? <a href="/login{% if target != '/' %}?next={{ target|urlencode }}{% endif %}">Log in</a>{% else %}New here? <a href="/signup{% if target != '/' %}?next={{ target|urlencode }}{% endif %}">Create an account</a>{% endif %}</p>
+  <a href="/preview">Take a look around first →</a>
+</section>
+{% endblock %}

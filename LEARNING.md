@@ -19,13 +19,13 @@ Accuracy approval is not proof of understanding. Label simulated trials explicit
 
 ## APP-002
 
-- Prediction: Pending.
-- Check interpretation: Pending.
-- Browser observation: Pending.
-- Keep decision: Pending.
-- Review: Pending.
-- Help/gaps: Pending.
-- Evidence links / next step: Keep APP-001 before agreeing this lesson.
+- Prediction: Learner wanted a preview without actions before login, login when an action is requested, a return to that action after login, and home after standalone login (AI paraphrase).
+- Check interpretation: Asked about replaying a copied session cookie after logout, learner said “whether or not a user can get in after loggin out?” AI clarified that this tested rejection of the old session cookie.
+- Browser observation: After AI requested a signup/login/logout trial and revisiting Member space, learner reported “it takes me back to log in screen.” This records the reported revisit result; no additional browser details are inferred.
+- Keep decision: Learner said “keep this account flow, because it did what I intended.”
+- Review: Learner reviewed the new APP-002 summary and approved commit, push and PR in this chat.
+- Help/gaps: AI proposed a public sample preview separate from the guarded dashboard and exact internal return destinations; learner approved. AI reused prepared password/session/CSRF helpers and updated starter navigation assertions to the approved behavior without removing authentication assertions. No tracking actions implemented. Learner reviewed the excerpts before publication.
+- Evidence links / next step: [Issue #3](https://github.com/mtm5913/my-app-studio/issues/3); Full explicit APP-002 and normal checks passed (110 foundation/navigation, 14 cumulative acceptance, 2 Chromium). Learner check interpretation, revisit observation and keep reason recorded. Accuracy review recorded; PR and CI pending.
 
 ## APP-003
 

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Your member space · Olive{% endblock %}
+{% block content %}
+<section class="member-intro">
+  <p class="eyebrow">A little space of your own</p><h1>Your member space</h1>
+  <p class="lede">Welcome, <strong>{{ user.username }}</strong>. It’s good to have you here.</p>
+  <div class="panel"><div><h2>One step at a time.</h2><p>Your account is ready. Meal and blood sugar tracking are still to come; there are no health records to enter here yet.</p></div><img src="/static/logo.svg" alt="" width="96" height="96"></div>
+  <form method="post" action="/logout"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button" type="submit">Log out</button></form>
+</section>
+{% endblock %}
