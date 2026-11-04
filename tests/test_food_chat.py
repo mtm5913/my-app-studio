@@ -168,9 +168,12 @@ def test_request_contract_and_search_citations():
         )
     assert recorded[0]["store"] is False
     assert recorded[0]["max_output_tokens"] == 700
-    assert recorded[0]["tools"][0]["type"] == "web_search"
-    assert "filters" not in recorded[0]["tools"][0]
-    assert result["sources"] == [{"url": "https://www.usda.gov/", "title": "USDA"}]
+    assert "tools" not in recorded[0]
+    assert "source_passages" in recorded[0]["input"][-1]["content"]
+    assert all(
+        s["url"].startswith("https://foodbuyingguide.fns.usda.gov/")
+        for s in result["sources"]
+    )
 
 
 def test_provider_failure_never_exposes_secrets():
@@ -179,6 +182,8 @@ def test_provider_failure_never_exposes_secrets():
         side_effect=httpx.ConnectError("secret content"),
     ):
         with pytest.raises(Exception) as failure:
-            food_ai.ask(food_ai.AIConfig(key="secret-key"), "Food question", False)
+            food_ai.ask(
+                food_ai.AIConfig(key="secret-key"), "What are whole grains?", False
+            )
     assert failure.value.status_code == 503
     assert "secret" not in failure.value.detail

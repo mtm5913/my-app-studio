@@ -158,33 +158,67 @@ application feature is required in these three lessons.
 [Instructor orientation and evaluation records](docs/instructor.md) are optional
 background; students start with this README.
 
-## Ask Olive · optional OpenAI extension
+## Ask Olive · RAG and FastAPI streaming
 
-Members can open `/ask` for general food questions. Sign in first; submitting a
-question requires agreeing to send it to OpenAI. No saved readings or account
-identity are attached. Each question starts fresh and chat history is not saved.
-AI answers can be wrong and are not personalized medical advice.
+Sign in and open `/ask` to ask questions about whole grains, vegetables, beans and
+meat alternatives. Answers arrive progressively above the composer. Ask follow-ups
+in the same tab; **New chat** or reload clears the conversation. **Stop answer**
+cancels the request and labels partial output incomplete.
 
-1. Set up API billing in your own [OpenAI Platform account](https://platform.openai.com/).
-   Add the credit you intend to use yourself; never paste payment details here.
-2. Copy `.env.example` to `.env` if the local file does not already exist. Enter
-   your key after `OPENAI_API_KEY=` in that local file. Keep it out of screenshots,
-   chat and GitHub. `.env` is ignored; only the empty example belongs in Git.
-3. Leave `OPENAI_MODEL=gpt-4.1-mini` or choose a model available to your API project
-   that supports Responses and web search. Refresh `/ask` after saving the key.
-4. Try a general question such as “What are ways to cook beans?” Optional web
-   search can add charges and displays returned source links.
+Olive retrieves up to three relevant passages from a small local collection of
+USDA Food Buying Guide material, then sends those passages with the question and
+up to three recent complete exchanges to OpenAI. Expand **Retrieved USDA sources**
+to inspect the exact passages and original links. A question with no useful match
+gets a local explanation without calling the provider. If retrieved text lacks an
+answer, the model is instructed to explain the gap rather than guess. Retrieval
+and prompting can still miss relevant passages or produce unsupported claims;
+inspect the citations. The collection does not provide personal medical advice.
 
-The server calls the fixed OpenAI Responses endpoint with a 30-second timeout,
-700 maximum output tokens, and at most one optional search tool call. Limits are
-10 attempts per member and 100 total per UTC day, stored locally across restarts.
-Failed upstream attempts count toward limits. These limits do not guarantee an
-exact dollar cap. Configure your API project's billing controls as well.
+### Local setup
 
-`store: false` requests no stored Responses object; OpenAI's other data retention
-policies still apply. Automated tests mock all provider calls and spend no credit.
-Live behavior requires a configured key and API credit. Never use production
-health details in a class demo. If a key is exposed, revoke it and create another.
+- Use your own funded OpenAI API project. Copy `.env.example` to `.env` only if a
+  local `.env` does not already exist. Enter the key after `OPENAI_API_KEY=`.
+- The key stays on the server in ignored `.env` or environment configuration.
+  Never put it in browser code, screenshots, GitHub or chat. Refresh `/ask` after
+  saving. The default model is `gpt-4.1-mini`.
+- Run `python3 studio.py run` and open the printed local URL. No Node or Next.js
+  setup is needed. Questions require login and explicit conversation-sharing consent.
+- Keep personal details and health readings out of questions. Conversation state
+  stays in tab memory; no chat content is saved in the database or browser storage.
+  `store: false` is sent to OpenAI; its other data retention policies still apply.
 
-API references: [Responses text generation](https://developers.openai.com/api/docs/guides/text),
-[web search](https://developers.openai.com/api/docs/guides/tools-web-search).
+### Implementation and limits
+
+`app/knowledge/usda-foods.json` contains six reviewed, attributed paraphrases from
+three USDA pages. `app/retrieval.py` builds a small lexical index locally, ranks
+passages with TF-IDF weights and reuses prior user topics for short follow-ups.
+This is retrieval-augmented generation without hosted file uploads or embeddings.
+Edit/review the corpus and restart the app to refresh the cached index.
+
+`POST /api/food-chat/stream` accepts `question`, `share_question` and `history`
+(user/assistant pairs, at most six messages and 12,000 total characters). It
+requires the session cookie and `X-CSRF-Token`. The response is newline-delimited
+JSON with `sources`, `delta`, `done` or `error` events. `app/food_ai.py` reads real
+OpenAI SSE events and forwards text as it arrives. Missing completion is an error;
+partial answers are excluded from subsequent context. The nonstreaming JSON/form
+routes remain available but now use the same curated sources. The legacy search
+flag no longer enables open-web answers in this source-grounded mode.
+
+Requests are capped at 10 per member and 100 total per UTC day, including refusals
+and failed upstream attempts. Limits persist locally across restarts. Input is
+limited to 1,200 characters, output to 700 tokens and upstream I/O timeout to 30
+seconds. These are request limits, not an exact dollar budget. Configure API billing
+controls separately. Credentials and account identity are never attached to prompts.
+
+### Verification
+
+`python3 studio.py check` runs formatting, analysis, isolated request tests,
+cumulative lesson contracts and real Chromium journeys. Provider calls are mocked;
+a dedicated test-only server fixture emits delayed chunks to verify incremental
+rendering, follow-ups, cancellation, errors and phone layout without spending API
+credit. That fixture is never used by `studio.py run` or normal app startup.
+
+Sources: [USDA grains](https://foodbuyingguide.fns.usda.gov/FoodComponents/ResourceGrains),
+[USDA vegetables](https://foodbuyingguide.fns.usda.gov/FoodComponents/ResourceVegetables),
+[USDA meats and meat alternates](https://foodbuyingguide.fns.usda.gov/FoodComponents/ResourceMeat).
+API guidance: [OpenAI streaming](https://developers.openai.com/api/docs/guides/streaming-responses).

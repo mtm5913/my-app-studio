@@ -1,31 +1,27 @@
 {% extends "base.html" %}
 {% block title %}Ask Olive · Olive{% endblock %}
+{% block scripts %}<script src="/static/chat.js" defer></script>{% endblock %}
 {% block content %}
 <section class="ask-space" aria-labelledby="ask-title">
   <p class="eyebrow">A little curiosity, together</p>
   <h1 id="ask-title">Ask Olive</h1>
-  <p class="lede">Food questions? Let’s explore them, bite by bite.</p>
-  <p>Try “What are some ways to add beans to lunch?” or “What does fiber do?”</p>
-  <p class="field-help">General food information from AI, which can make mistakes. For personal blood sugar, treatment or medication advice, talk with your healthcare professional.</p>
+  <p class="lede">Let’s explore food, with a little help from our sources.</p>
+  <p>Try “What are whole grains?” or “Which vegetables can I add to tacos?”</p>
+  <p class="field-help">Answers use a small USDA food collection. When it doesn’t have enough information, Olive will explain why it can’t answer. General food information, not personal blood sugar or treatment advice.</p>
   {% if not connected %}<p class="setup-note" role="status">Ask Olive isn’t connected yet. Your project owner needs to add an OpenAI API key before questions can be answered.</p>{% endif %}
-  {% if error %}<p role="alert">{{ error }}</p>{% endif %}
-  {% if result %}
-  <section class="olive-answer" aria-labelledby="answer-title">
-    <h2 id="answer-title">A little food for thought</h2>
-    <p class="answer-text">{{ result.answer }}</p>
-    {% if result.sources %}<h3>Sources</h3><ul>{% for source in result.sources %}<li><a href="{{ source.url }}" target="_blank" rel="noopener noreferrer">{{ source.title }}</a></li>{% endfor %}</ul>{% endif %}
-  </section>
-  {% endif %}
-  <form method="post" action="/ask" class="ask-form">
+  <noscript><p class="setup-note">Enable JavaScript to use the streaming chat. No question has been sent.</p></noscript>
+  <div class="chat-toolbar"><p id="chat-status" role="status" aria-live="polite">A fresh conversation, at your pace.</p><button type="button" id="new-chat" class="text-button">New chat</button></div>
+  <div id="conversation" role="log" aria-label="Conversation with Olive" aria-live="off">{% if result %}<article class="chat-message from-olive"><h2>Olive</h2><p class="answer-text">{{ result.answer }}</p>{% for source in result.sources %}<a href="{{ source.url }}">{{ source.title }}</a>{% endfor %}</article>{% endif %}</div>
+  <p id="chat-error" role="alert" hidden></p>
+  <form id="chat-form" class="ask-form" method="post" action="/ask">
     <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-    <label for="question">{% if result %}Ask another food question{% else %}Your food question{% endif %}</label>
-    <textarea id="question" name="question" rows="4" minlength="3" maxlength="1200" required aria-describedby="sharing-note" placeholder="What would you like to learn about food?"></textarea>
-    <p id="sharing-note" class="field-help">Only this question is sent to OpenAI. Keep names, blood sugar readings and other personal health details out of it. Olive doesn’t save chat history. OpenAI’s own data policies still apply.</p>
-    <label class="check-label"><input type="checkbox" name="search" value="true"> Search food and health sources on the web (may use additional API credit)</label>
-    <label class="check-label"><input type="checkbox" name="share_question" value="true" required> I agree to send this question to OpenAI.</label>
-    <button class="button" type="submit" {% if not connected %}disabled{% endif %}>Ask Olive</button>
-    <p class="field-help">Up to 10 questions per member per UTC day. Each question starts fresh.</p>
+    <label for="question">Your food question</label>
+    <textarea id="question" name="question" rows="3" minlength="3" maxlength="1200" required aria-describedby="sharing-note" placeholder="What would you like to learn about food?"></textarea>
+    <p id="sharing-note" class="field-help">Your question and up to three recent exchanges are sent to OpenAI with relevant public USDA passages. Keep personal health details out of the chat. It stays in this tab’s memory and clears when you reload or start a new chat. OpenAI’s data policies still apply.</p>
+    <label class="check-label"><input type="checkbox" name="share_question" required> I agree to send this conversation to OpenAI.</label>
+    <div class="chat-actions"><button class="button" type="submit" id="send-question" {% if not connected %}disabled{% endif %}>Ask Olive</button><button type="button" id="stop-answer" class="text-button" hidden>Stop answer</button></div>
+    <p class="field-help">Up to 10 requests per member per UTC day. Questions without useful source matches are answered locally.</p>
   </form>
-
+  <details class="collection-info"><summary>What can Olive use to answer?</summary><p>Selected USDA Food Buying Guide passages about whole grains, vegetable nutrients and meal ideas, beans and meat alternatives. Retrieved passages appear with each answer so you can check them. The complete USDA guide covers more than this small collection.</p></details>
 </section>
 {% endblock %}

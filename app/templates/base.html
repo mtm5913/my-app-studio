@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="/brand.css">
   <link rel="stylesheet" href="/static/site.css">
   {% if request.app.state.live_reload %}<script src="/static/live.js" defer></script>{% endif %}
+  {% block scripts %}{% endblock %}
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
