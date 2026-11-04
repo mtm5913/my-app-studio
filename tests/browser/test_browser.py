@@ -43,6 +43,7 @@ def server(tmp_path_factory):
         APP_DATABASE=str(directory / "browser.sqlite3"),
         APP_SECRET="disposable-browser-test-key-" + uuid.uuid4().hex,
         STUDIO_LIVE_RELOAD="0",
+        OPENAI_API_KEY="test-only-never-real",
     )
     with (directory / "server.log").open("w") as output:
         process = subprocess.Popen(
@@ -50,7 +51,7 @@ def server(tmp_path_factory):
                 sys.executable,
                 "-m",
                 "uvicorn",
-                "app.main:create_app",
+                "tests.browser.rag_server:create_app",
                 "--factory",
                 "--host",
                 "127.0.0.1",
@@ -198,3 +199,95 @@ def _check_role_boundary(page, server, username):
                     Path(server.environment["APP_DATABASE"]).parent / "admin-mobile.png"
                 )
             )
+
+
+def test_rag_streaming_conversation_and_failure(page, server):
+    """Drive the real browser and FastAPI stream against a disposable provider."""
+    if LEVEL < 2:
+        pytest.skip("Accounts are needed for the member-only chat.")
+    username = "rag_" + uuid.uuid4().hex[:10]
+    credentials = {"username": username, "password": "a disposable streaming password"}
+    token = page.request.get(server.url + "/api/csrf").json()["csrf_token"]
+    headers = {"X-CSRF-Token": token}
+    assert (
+        page.request.post(
+            server.url + "/api/signup", data=credentials, headers=headers
+        ).status
+        == 201
+    )
+    assert (
+        page.request.post(
+            server.url + "/api/login", data=credentials, headers=headers
+        ).status
+        == 200
+    )
+    page.goto(server.url + "/ask")
+    page.get_by_label(
+        "I agree to send this conversation to OpenAI.", exact=True
+    ).check()
+    page.get_by_label("Your food question", exact=True).fill("What are whole grains?")
+    page.get_by_role("button", name="Ask Olive", exact=True).click()
+    expect(page.locator(".from-olive .answer-text")).to_have_text(
+        "Whole grains contain "
+    )
+    expect(page.get_by_role("button", name="Stop answer")).to_be_visible()
+    expect(page.locator("#chat-status")).to_have_text(
+        "Answer complete. You can ask a follow-up below."
+    )
+    page.get_by_text("Retrieved USDA sources", exact=True).click()
+    expect(page.get_by_role("link", name="[1] USDA", exact=False)).to_be_visible()
+    captured = []
+    page.on(
+        "request",
+        lambda request: (
+            captured.append(request.post_data_json)
+            if request.url.endswith("/api/food-chat/stream")
+            else None
+        ),
+    )
+    page.get_by_label("Ask another food question", exact=True).fill(
+        "Tell me more about them"
+    )
+    page.get_by_role("button", name="Ask Olive", exact=True).click()
+    expect(page.locator("#chat-status")).to_have_text(
+        "Answer complete. You can ask a follow-up below."
+    )
+    assert len(captured[-1]["history"]) == 2
+    assert captured[-1]["history"][0]["content"] == "What are whole grains?"
+    # The composer remains below the latest answer, including at phone width.
+    page.set_viewport_size({"width": 390, "height": 844})
+    assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
+    assert (
+        page.locator("#chat-form").bounding_box()["y"]
+        > page.locator("#conversation").bounding_box()["y"]
+    )
+    directory = Path(server.environment["APP_DATABASE"]).parent
+    page.screenshot(path=str(directory / "rag-mobile.png"), full_page=True)
+    page.set_viewport_size({"width": 1280, "height": 900})
+    page.wait_for_timeout(150)
+    page.screenshot(path=str(directory / "rag-desktop.png"), full_page=True)
+    page.get_by_role("button", name="New chat").click()
+    expect(page.locator(".chat-message")).to_have_count(0)
+    page.get_by_label("Your food question", exact=True).fill(
+        "How do I repair a bicycle?"
+    )
+    page.get_by_role("button", name="Ask Olive", exact=True).click()
+    expect(page.locator(".from-olive .answer-text")).to_contain_text(
+        "doesn't contain enough relevant information"
+    )
+    assert captured[-1]["history"] == []
+    page.get_by_label("Ask another food question", exact=True).fill(
+        "whole grains interrupt"
+    )
+    page.get_by_role("button", name="Ask Olive", exact=True).click()
+    expect(page.get_by_role("alert")).to_contain_text("disconnected")
+    expect(page.get_by_role("button", name="Ask Olive", exact=True)).to_be_enabled()
+    page.get_by_label("Ask another food question", exact=True).fill(
+        "What are whole grains?"
+    )
+    page.get_by_role("button", name="Ask Olive", exact=True).click()
+    expect(page.get_by_role("button", name="Stop answer")).to_be_visible()
+    page.get_by_role("button", name="Stop answer").click()
+    expect(page.get_by_role("alert")).to_contain_text("Answer stopped")
+    page.reload()
+    expect(page.locator(".chat-message")).to_have_count(0)

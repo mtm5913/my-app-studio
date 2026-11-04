@@ -110,3 +110,41 @@ published in [PR #7](https://github.com/mtm5913/my-app-studio/pull/7), merged at
 
 Learner requested the answer appear above the question form, with the next question
 box underneath. Revised the result layout and subsequent-question label accordingly.
+
+
+## Extension · RAG and streaming (in progress)
+
+Agreed scope: extend Ask Olive using FastAPI streaming, a small USDA document
+collection, citations and bounded follow-up context. When source passages do not
+support an answer, explain why Olive cannot answer instead of guessing.
+
+- Branch: `codex/olive-rag-streaming`; local implementation, no PR yet.
+- Collection: `app/knowledge/usda-foods.json`, six attributed paraphrased passages
+  from three USDA Food Buying Guide pages, reviewed 2026-11-04. Program rules
+  retain their Child Nutrition Program context. This is not the full guide.
+- Retrieval: `app/retrieval.py` ranks local passage words with TF-IDF weights,
+  light plural normalization and prior user-topic context for short follow-ups.
+  Top three matching passages enter the prompt. This is lexical RAG; no embedding
+  service, vector database or public document-upload endpoint is required.
+- Generation: real OpenAI Responses SSE deltas are relayed as NDJSON from
+  `/api/food-chat/stream`. Source metadata comes from the corpus; model text is
+  rendered as plain text. The old JSON/form endpoints also use curated retrieval;
+  their legacy search flag is accepted but no longer enables live web search.
+- UI: messages above composer, sources with excerpts, Stop answer, New chat,
+  incomplete-answer status. Up to three recent complete exchanges in tab memory;
+  no localStorage/sessionStorage or server chat-history persistence. Provider
+  storage remains disabled with `store: false`; other provider policies apply.
+- Boundaries: existing login, CSRF, per-member/global daily limits and secret
+  configuration retained. Missing matches refuse locally without an LLM call.
+  A lexical match does not guarantee sufficient evidence; the model is instructed
+  to refuse partial/unsupported or personal-medical requests. This prompt-based
+  safeguard is not a guarantee of perfect grounding.
+- Validation: full checks passed (139 foundation, 18 cumulative contracts,
+  3 real Chromium journeys). Provider tests prove first delta precedes completion,
+  cancellation closes the provider stream and failures do not emit success. Browser
+  tests cover incremental rendering, follow-up payload, refusal, source links,
+  interruption, stop, reset and 390px layout. Final full checks passed again after form fallback and layout polish.
+- Live checks: “What are whole grains?” completed with 58 text deltas and citations
+  to retrieved grain passages. A request for exact fiber grams in a cup of lentils
+  was refused with an explanation that the passages lack that quantity.
+  Learner observed the chat layout, chose to keep it, reviewed the learning summary and authorized commit/push/PR. PR and latest CI verification pending.

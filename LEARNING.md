@@ -44,3 +44,13 @@ Accuracy approval is not proof of understanding. Label simulated trials explicit
 - Help/review: AI implemented the requested layout change. Learner reviewed this summary and authorized commit, push and PR before publication.
 
 Extension publication: [PR #7](https://github.com/mtm5913/my-app-studio/pull/7) merged; [post-merge CI](https://github.com/mtm5913/my-app-studio/actions/runs/40973823631) passed both jobs.
+
+
+## Extension · RAG and streaming
+
+- Prediction / chosen behavior: Asked what Olive should do when its documents lack enough information, learner said “refuse to answer the question and explain why its unable to answer the question”.
+- Check interpretation: Learner explained that the check tests whether information is in the sources and whether Olive responds properly when the information is missing (AI paraphrase).
+- Browser observation: Learner said “it looks like a chat rather than a search box when the answer comes up”.
+- Keep decision: Learner chose to keep this version because “It does what its supposed to do”.
+- Review: Learner reviewed the summary and authorized commit, push and PR in this chat.
+- Help/gaps: AI proposed a small USDA source collection, lexical retrieval, citations and FastAPI streaming; learner approved that scope. AI implemented and tested retrieval, citations, streaming and the chat layout. A source match alone does not prove that all generated claims are supported.
